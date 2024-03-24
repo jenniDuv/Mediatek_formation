@@ -59,7 +59,7 @@ class FormationsController extends AbstractController {
             'formations' => $formations,
             'categories' => $categories
         ]);
-    }     
+    }
     
     /**
      * @Route("/formations/recherche/{champ}/{table}", name="formations.findallcontain")
@@ -78,7 +78,7 @@ class FormationsController extends AbstractController {
             'valeur' => $valeur,
             'table' => $table
         ]);
-    }  
+    }
     
     /**
      * @Route("/formations/formation/{id}", name="formations.showone")
@@ -89,7 +89,7 @@ class FormationsController extends AbstractController {
         $formation = $this->formationRepository->find($id);
         return $this->render("pages/formation.html.twig", [
             'formation' => $formation
-        ]);        
-    }   
+        ]);
+    }
     
 }

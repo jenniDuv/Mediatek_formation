@@ -32,7 +32,7 @@ class PlaylistsController extends AbstractController {
      * 
      * @var CategorieRepository
      */
-    private $categorieRepository;    
+    private $categorieRepository;
     
     function __construct(PlaylistRepository $playlistRepository, 
             CategorieRepository $categorieRepository,
@@ -51,7 +51,7 @@ class PlaylistsController extends AbstractController {
         $categories = $this->categorieRepository->findAll();
         return $this->render("pages/playlists.html.twig", [
             'playlists' => $playlists,
-            'categories' => $categories            
+            'categories' => $categories
         ]);
     }
 
@@ -70,9 +70,9 @@ class PlaylistsController extends AbstractController {
         $categories = $this->categorieRepository->findAll();
         return $this->render("pages/playlists.html.twig", [
             'playlists' => $playlists,
-            'categories' => $categories            
+            'categories' => $categories
         ]);
-    }          
+    }
 	
     /**
      * @Route("/playlists/recherche/{champ}/{table}", name="playlists.findallcontain")
@@ -87,7 +87,7 @@ class PlaylistsController extends AbstractController {
         $categories = $this->categorieRepository->findAll();
         return $this->render("pages/playlists.html.twig", [
             'playlists' => $playlists,
-            'categories' => $categories,            
+            'categories' => $categories,
             'valeur' => $valeur,
             'table' => $table
         ]);
@@ -106,7 +106,7 @@ class PlaylistsController extends AbstractController {
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
             'playlistformations' => $playlistFormations
-        ]);        
-    }       
+        ]);
+    }
     
 }

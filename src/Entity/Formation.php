@@ -17,7 +17,7 @@ class Formation
      * Début de chemin vers les images
      */
     private const cheminImage = "https://i.ytimg.com/vi/";
-    
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -76,13 +76,14 @@ class Formation
 
         return $this;
     }
-    
-    public function getPublishedAtString(): string {
-        if($this->publishedAt == null){
+
+    public function getPublishedAtString(): string
+    {
+        if ($this->publishedAt == null) {
             return "";
         }
-        return $this->publishedAt->format('d/m/Y');     
-    }      
+        return $this->publishedAt->format('d/m/Y');
+    }
 
     public function getTitle(): ?string
     {
@@ -110,12 +111,12 @@ class Formation
 
     public function getMiniature(): ?string
     {
-        return self::cheminImage.$this->videoId."/default.jpg";
+        return self::cheminImage . $this->videoId . "/default.jpg";
     }
 
     public function getPicture(): ?string
     {
-        return self::cheminImage.$this->videoId."/hqdefault.jpg";
+        return self::cheminImage . $this->videoId . "/hqdefault.jpg";
     }
 
     public function getVideoId(): ?string

@@ -14,20 +14,29 @@
     <p>
         Voici les <strong>deux dernières formations</strong> ajoutées au catalogue :
         <table class="table">
+            <caption> 
+                <p>Description</p>
+            </caption>
+
+            
             <tr>
                 {% for formation in formations %}
                     <td>
                         <div class="row">
-                            <div class="col">
+                            <th><div class="col">
                                 <!-- emplacement photo -->
+
                                 {% if formation.picture %}
                                     <a href="{{ path('formations.showone', {id:formation.id}) }}">
-                                    <img src="{{ formation.picture }}" 
+                                    <img src="{{ formation.picture }}" alt=""
                                          class="card-img-top" style="width:100%;height:auto;">
                                     </a>    
                                 {% endif %}
+
                             </div>
-                            <div class="col">
+                            </th>
+
+                            <th><div class="col">
                                 <p>{{ formation.publishedatstring }}</p>
                                 <h5 class="text-info mt-1">
                                     {{ formation.title }}
@@ -37,12 +46,13 @@
                                 {% for categorie in formation.categories %}
                                     {{ categorie.name }}&nbsp;
                                 {% endfor %}
-                            </div>    
-                        </div>                    
+                            </div> </th>   
+                        </div>
+                                        
                 {% endfor %}    
             </tr>
 
-        </table>        
+        </table> 
     </p>
 {% endblock %}
 

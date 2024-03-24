@@ -1,0 +1,45 @@
+{%extends "basefront.html.twig" %}
+
+  {% block body %}
+    bonjour {{nom}}
+    <h2>Mes amis sont:</h2
+
+    {% for i in 0..10 %}
+    {{i}}
+
+    {% endfor %}
+
+    <a href="formations">Formations</a>
+
+    <ul>
+
+    {%for ami in amis%}
+
+        <li>
+
+       
+
+            {% if ami is same as "Anne"%}
+            {{ami~ " " ~"préfére"}} 
+
+            {% elseif ami is same as "Paul" %}
+            {{ami ~ " favori"}} 
+
+
+
+            {% else %}
+
+            {{ami}}
+
+            {%endif%}
+        
+        </li>
+
+    {% endfor %}
+    </ul>
+
+    <div> 
+    <img src="{{absolute_url (asset("banniere.jpg"))}}"/>
+
+    </div>
+{% endblock %}

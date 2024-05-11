@@ -89,4 +89,30 @@ class PlaylistRepository extends ServiceEntityRepository
                 ->getResult();
         }
     }
+
+    public function countFormationsByPlaylist($playlistId)
+    {
+    return $this->createQueryBuilder('p')
+        ->select('COUNT(f.id)')
+        ->leftJoin('p.formations', 'f')
+        ->where('p.id = :playlistId')
+        ->setParameter('playlistId', $playlistId)
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
+    /**
+     * Retourne toutes les playlists triées par le nombre de formations
+     * @param string $ordre
+     * @return Playlist[]
+     */
+    public function findAllOrderByFormationCount($ordre): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.formations', 'f')
+            ->groupBy('p.id')
+            ->orderBy('COUNT(f)', $ordre)
+            ->getQuery()
+            ->getResult();
+    }
 }

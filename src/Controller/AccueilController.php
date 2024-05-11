@@ -22,31 +22,6 @@ class AccueilController extends AbstractController
      */
     private $repository;
 
-
-
-
-
-    /**
-     * @Route("/bonjour")
-     */
-
-    public function bonjour()
-    {
-
-
-
-        $nom = "Jennifer";
-
-        if ($nom) {
-            dump($nom);
-        }
-
-        return $this->render("bonjour.html.twig", [
-            'nom' => $nom,
-        
-        ]);
-    }
-
     /**
      *
      * @param FormationRepository $repository
@@ -55,6 +30,12 @@ class AccueilController extends AbstractController
     {
         $this->repository = $repository;
     }
+
+
+
+
+
+
 
     /**
      * @Route("/", name="accueil")

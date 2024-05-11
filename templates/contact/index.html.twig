@@ -1,0 +1,39 @@
+{% extends 'basefront.html.twig' %}
+{% block body %}
+
+
+
+<div class="row>
+<div class="col-md-12>
+
+{{form_start (form, {attr: {
+
+    novalidate: "novalidate"
+}})}}
+
+{{form_row (form.subject)}}
+
+{{form_row (form.email)}}
+
+{{form_row (form.fullName)}}
+
+{{form_row (form.description)}}
+
+
+
+
+
+
+<button class="btn btn-primary" type="submit">Envoyer</button>
+
+{{form_end (form)}}
+
+</div>
+</div>
+
+
+{% endblock body %}
+
+
+
+

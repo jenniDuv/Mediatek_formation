@@ -6,8 +6,11 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @UniqueEntity("name")
  * @ORM\Entity(repositoryClass=CategorieRepository::class)
  */
 class Categorie
@@ -21,6 +24,8 @@ class Categorie
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Assert\NotNull()
+     * @Assert\Length(min=2, max=50)
      */
     private $name;
 
@@ -29,9 +34,15 @@ class Categorie
      */
     private $formations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Formation::class, mappedBy="categories")
+     */
+    private $formation;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
+        $this->formation = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,6 +83,33 @@ class Categorie
     public function removeFormation(Formation $formation): self
     {
         if ($this->formations->removeElement($formation)) {
+            $formation->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Formation>
+     */
+    public function getFormationAdd(): Collection
+    {
+        return $this->formation;
+    }
+
+    public function addFormationAdd(Formation $formation): self
+    {
+        if (!$this->formation->contains($formation)) {
+            $this->formation[] = $formation;
+            $formation->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFormationAdd(Formation $formation): self
+    {
+        if ($this->formation->removeElement($formation)) {
             $formation->removeCategory($this);
         }
 

@@ -1,0 +1,22 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Ajouter une formation{% endblock %}
+
+{% block body %}
+    <h1>Modifier une formation</h1>
+
+    {{form_start (form, {attr: {
+
+    novalidate: "novalidate"
+}})}}
+
+
+        {{ form_row(form.title, {label: 'Titre'}) }}
+        {{ form_row(form.description, {label: 'Description'}) }}
+        {{ form_row(form.playlist, {label: 'Playlist'}) }}
+        {{ form_row(form.categories, {label: 'Catégorie'}) }}
+        {{ form_row(form.publishedAt, {label: 'Date'}) }}
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+{% endblock %}

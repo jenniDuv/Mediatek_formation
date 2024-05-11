@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+
+{{parent()}} - 2024
+
+{% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block top %}
+    <div class="container">
+        <!-- titre -->
+        <div class="text-left">
+            <img src="{{ app.request.getBasePath()~'/banniere.jpg' }}"  alt="">
+        </div>
+        <!-- menu -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+
+
+
+                        <a class="nav-link" href="{{ path('admin.accueil') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('admin.formations') }}">Formations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('admin.playlists') }}">Playlists</a>
+                    </li>
+                </ul>
+            </div>
+
+             {% if app.user %}
+
+            <a href="{{absolute_url(path('app_logout'))}}"><button class="btn btn-danger">Se deconnecter</button></a>
+
+
+            {% endif %}
+
+        </nav>        
+    </div>
+{% endblock %}
+
+
+
+
+
+{% block body %}{% endblock %}
+{% block footer %}
+    <div class="container text-center">
+        <footer>
+            <hr>
+            <p><small><i>
+                Consultez nos <a class="link-secondary" href="{{ path('admin.cgu') }}">Conditions Générales d'Utilisation</a>
+            </i></small></p>
+            
+        </footer>
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}#}

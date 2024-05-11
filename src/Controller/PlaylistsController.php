@@ -1,13 +1,19 @@
 <?php
+
+//use Symfony\Bridge\Doctrine\ManagerRegistry;
 namespace App\Controller;
 
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
 use App\Repository\PlaylistRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Playlist;
+use App\Form\PlaylistType;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Description of PlaylistsController
@@ -15,9 +21,12 @@ use Symfony\Component\Routing\Annotation\Route;
  * @author emds
  */
 class PlaylistsController extends AbstractController {
+
+
+    const PLAYLISTS_VIEW = "pages/playlists.html.twig";
     
     /**
-     * 
+     *
      * @var PlaylistRepository
      */
     private $playlistRepository;
@@ -34,7 +43,7 @@ class PlaylistsController extends AbstractController {
      */
     private $categorieRepository;
     
-    function __construct(PlaylistRepository $playlistRepository, 
+    function __construct(PlaylistRepository $playlistRepository,
             CategorieRepository $categorieRepository,
             FormationRepository $formationRespository) {
         $this->playlistRepository = $playlistRepository;
@@ -48,10 +57,20 @@ class PlaylistsController extends AbstractController {
      */
     public function index(): Response{
         $playlists = $this->playlistRepository->findAllOrderByName('ASC');
+
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+
+        // Récupérez le nombre de formations pour chaque playlist
+        $formationCount = [];
+        foreach ($playlists as $playlist) {
+            $formationCount[$playlist->getId()] = $this->formationRepository->countByPlaylist($playlist->getId());
+        }
+
+        return $this->render(self::PLAYLISTS_VIEW, [
             'playlists' => $playlists,
-            'categories' => $categories
+            'categories' => $categories,
+            'formationCount' => $formationCount
+
         ]);
     }
 
@@ -66,11 +85,22 @@ class PlaylistsController extends AbstractController {
             case "name":
                 $playlists = $this->playlistRepository->findAllOrderByName($ordre);
                 break;
+            case "formation_count":
+                $playlists = $this->playlistRepository->findAllOrderByFormationCount($ordre);
+                break;
+
         }
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+
+        $formationCount = [];
+        foreach ($playlists as $playlist) {
+            $formationCount[$playlist->getId()] = $this->formationRepository->countByPlaylist($playlist->getId());
+        }
+
+        return $this->render(self::PLAYLISTS_VIEW, [
             'playlists' => $playlists,
-            'categories' => $categories
+            'categories' => $categories,
+            'formationCount' => $formationCount
         ]);
     }
 	
@@ -85,13 +115,13 @@ class PlaylistsController extends AbstractController {
         $valeur = $request->get("recherche");
         $playlists = $this->playlistRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::PLAYLISTS_VIEW, [
             'playlists' => $playlists,
             'categories' => $categories,
             'valeur' => $valeur,
             'table' => $table
         ]);
-    }  
+    }
     
     /**
      * @Route("/playlists/playlist/{id}", name="playlists.showone")
@@ -102,11 +132,19 @@ class PlaylistsController extends AbstractController {
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
+
+        // Appel de la méthode countFormationsByPlaylist pour obtenir le nombre de formations
+        $formationCount = $this->playlistRepository->countFormationsByPlaylist($id);
+
+
         return $this->render("pages/playlist.html.twig", [
             'playlist' => $playlist,
             'playlistcategories' => $playlistCategories,
-            'playlistformations' => $playlistFormations
+            'playlistformations' => $playlistFormations,
+            'formationCount' => $formationCount,
+
         ]);
     }
+
     
 }

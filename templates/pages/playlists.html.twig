@@ -4,8 +4,11 @@
 
 
     <table class="table table-striped">
+
         <caption></caption>
+
         <thead>
+
             <tr>
                 <th class="text-left align-top" scope="col">
                     Playlist<br />
@@ -21,6 +24,7 @@
                         </div>
                     </form>                    
                 </th>
+
                 <th class="text-left align-top" scope="col">
                     Catégories
                     <form class="form-inline mt-1" method="POST" action="{{ path('playlists.findallcontain', {champ:'id', table:'categories'}) }}">
@@ -37,17 +41,28 @@
                         </select>                    
                     </form>            
                 </th>
+
+                <th class="text-center align-top" scope="col">
+                    Nombre de Formations
+                    <a href="{{ path('playlists.sort', {champ:'formation_count', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('playlists.sort', {champ:'formation_count', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                </th>
+
+                
+
                 <th class="text-center align-top" scope="col">
                     &nbsp;
-                </th>				
+                </th>
+
             </tr>
+
         </thead>
         <tbody>
 
         
             <!-- boucle sur les playlists -->
 
-        {% for playlist in playlists%} {# parcourir les indices du tableau #}
+        {% for playlist in playlists %} {# parcourir les indices du tableau #}
 
         <tr class="align-middle">
                         <td>
@@ -61,10 +76,17 @@
                                 {% for c in categories %}
                                     &nbsp;{{ c }}                                  
                                 {% endfor %}
-                        </td>            					
+                        </td>
+
+                        <td class="text-center">{{ formationCount[playlist.id] }}</td>
+
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
-                        </td> 					
+                        </td>
+
+                        <td>
+
+
                     </tr>
                 {% endfor %}	
 

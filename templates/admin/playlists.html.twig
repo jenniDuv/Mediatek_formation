@@ -1,0 +1,130 @@
+{% extends 'basefront.html.twig' %}
+{% block body %}
+{%set valeur = valeur|default %}
+
+
+    <table class="table table-striped">
+        <caption></caption>
+        <thead>
+            <tr>
+                <th class="text-left align-top" scope="col">
+                    Playlist<br />
+                    <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.playlists.findallcontain', {champ:'name'}) }}">
+                        <div class="form-group mr-1 mb-2">
+                            <input type="text" class="sm" name="recherche" 
+                                   value="{% if valeur and not table|default %}{{ valeur }}{% endif %}">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
+                            <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                        </div>
+                    </form>                    
+                </th>
+
+                <th class="text-left align-top" scope="col">
+                    Catégories
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin.playlists.findallcontain', {champ:'id', table:'categories'}) }}">
+                        <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit()">
+                            <option value=""></option>
+                            {% for categorie in categories %}
+                                <option 
+                                    {% if valeur and valeur==categorie.id %} 
+                                        selected
+                                    {% endif %} 
+                                    value="{{ categorie.id }}">{{ categorie.name }}
+                                </option>
+                            {% endfor %}
+                        </select>                    
+                    </form>            
+                </th>
+
+                <th class="text-center align-top" scope="col">
+                    Nombre de Formations
+                    <a href="{{ path('admin.playlists.sort', {champ:'formation_count', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('admin.playlists.sort', {champ:'formation_count', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                </th>
+
+
+                
+
+                <th class="text-center align-top" scope="col">
+                    &nbsp;
+                </th>
+            </tr>
+            
+        </thead>
+        <tbody>
+
+        
+            <!-- boucle sur les playlists -->
+
+        {% for playlist in playlists %} {# parcourir les indices du tableau #}
+
+        <tr class="align-middle">
+                        <td>
+                            <h5 class="text-info">
+                                {{ playlist.name }} {# Accède au contenu du tableau #}
+                            </h5>
+                        </td>                 
+                        <td class="text-left">
+                            {% set categories = playlist.categoriesplaylist %}
+                    
+                                {% for c in categories %}
+                                    &nbsp;{{ c }}                                  
+                                {% endfor %}
+                        </td>
+
+                        <td class="text-center">{{ formationCount[playlist.id] }}</td>
+
+                        <td class="text-center">
+                            <a href="{{ path('admin.playlists.showone', {id:playlist.id}) }}" class="btn btn-secondary">Voir détail</a>
+                        </td>
+
+                        <td>
+
+                         <a href="{{ absolute_url(path("admin.playlists.edit", {id:playlist.id}))}}"><button class="btn btn-primary">Modifier</button><a>
+                        <a href="{{ path('admin.playlists.add') }}" class="btn btn-success"> + </a>
+
+
+                        
+                                <!-- Button to Open the Modal -->
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                                    Supprimer
+                                </button>
+
+                            <!-- The Modal -->
+                            <div class="modal" id="myModal">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Attention</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        Êtes-vous sûr de vouloir supprimer cette playlist ?
+                                    </div>
+                                    
+                                    <!-- Modal footer -->
+                                    <form action="{{ path('admin.playlists.delete', {id: playlist.id}) }}" method="post">
+                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                            
+                        
+       
+                        </td>
+                    </tr>
+                {% endfor %}	
+
+            
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Liste des catégories{% endblock %}
+
+
+{% block body %}
+    <h1>Liste des catégories</h1>
+
+    <ul>
+
+
+
+            {% for category in categories %}
+                <li>
+
+                    {{ category.name }}
+
+                    <form action="{{ path('admin.categories.delete', {id: category.id}) }}"
+                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                        
+                </li>
+          
+        {% endfor %}
+
+    </ul>
+
+
+    <h2>Ajouter une nouvelle catégorie</h2>
+
+        <form method="POST" action="{{ path('admin.categories') }}">
+
+        {{form_row(form.name)}}
+        {{form_rest(form)}}
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    </form>
+{% endblock %}

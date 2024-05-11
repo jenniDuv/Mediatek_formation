@@ -1,12 +1,19 @@
 <?php
+//Ce code définit un contrôleur qui gère les différentes vues
+//et les actions associées aux formations d'un site web.
 namespace App\Controller;
 
+use App\Entity\Formation;
+use App\Entity\Playlist;
+use App\Form\FormationType;
 use App\Repository\CategorieRepository;
 use App\Repository\FormationRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Controleur des formations
@@ -15,14 +22,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FormationsController extends AbstractController {
 
+    const FORMATIONS_VIEW = "pages/formations.html.twig";
+
     /**
-     * 
+     *
      * @var FormationRepository
      */
     private $formationRepository;
     
     /**
-     * 
+     *
      * @var CategorieRepository
      */
     private $categorieRepository;
@@ -36,12 +45,13 @@ class FormationsController extends AbstractController {
      * @Route("/formations", name="formations")
      * @return Response
      */
-    public function index(): Response{
+    public function index(): Response{ //permet à l'utilisateur de pouvoir accéder à l'URL /formations
         $formations = $this->formationRepository->findAll();
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/formations.html.twig", [
+        return $this->render(self::FORMATIONS_VIEW, [
             'formations' => $formations,
-            'categories' => $categories
+            'categories' => $categories,
+
         ]);
     }
 
@@ -55,7 +65,7 @@ class FormationsController extends AbstractController {
     public function sort($champ, $ordre, $table=""): Response{
         $formations = $this->formationRepository->findAllOrderBy($champ, $ordre, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/formations.html.twig", [
+        return $this->render(self::FORMATIONS_VIEW, [
             'formations' => $formations,
             'categories' => $categories
         ]);
@@ -72,7 +82,7 @@ class FormationsController extends AbstractController {
         $valeur = $request->get("recherche");
         $formations = $this->formationRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/formations.html.twig", [
+        return $this->render(self::FORMATIONS_VIEW, [
             'formations' => $formations,
             'categories' => $categories,
             'valeur' => $valeur,
@@ -91,5 +101,7 @@ class FormationsController extends AbstractController {
             'formation' => $formation
         ]);
     }
-    
+
+
 }
+

@@ -7,6 +7,7 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=FormationRepository::class)
@@ -27,31 +28,40 @@ class Formation
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\LessThanOrEqual("today")
+     *@Assert\NotNull() 
      */
     private $publishedAt;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\NotNull()
+     * @Assert\Length(max=100)
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(max=500)
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\NotNull()
+     * @Assert\Length(max=100)
      */
     private $videoId;
 
     /**
      * @ORM\ManyToOne(targetEntity=Playlist::class, inversedBy="formations")
+     * @Assert\NotNull()
      */
     private $playlist;
 
     /**
      * @ORM\ManyToMany(targetEntity=Categorie::class, inversedBy="formations")
+     * @Assert\NotNull()
      */
     private $categories;
 

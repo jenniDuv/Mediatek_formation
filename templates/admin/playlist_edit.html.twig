@@ -1,0 +1,36 @@
+{% extends 'basefront.html.twig' %}
+
+{% block title %}Moddifier une playlist{% endblock %}
+
+{% block body %}
+    <h1>Modifier une playlist</h1>
+
+    {{form_start (form, {attr: {
+
+    novalidate: "novalidate"
+}})}}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+
+{% if formations is defined %}
+        <h2>Formations</h2>
+
+
+<ul>
+        {% for formation in formations %}
+
+        <li>{{formation.title}}</li>
+        
+
+
+        {% endfor %}
+</ul>
+
+{% endif %}
+        
+        <button type="submit" class="btn btn-primary">Ajouter
+        
+        </button>
+    {{ form_end(form) }}
+{% endblock %}

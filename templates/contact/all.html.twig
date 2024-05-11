@@ -1,0 +1,43 @@
+{% extends 'basefront.html.twig' %}
+
+{% block body %}
+
+
+<table class="table table-bordered">
+
+<thead>
+<tr>
+
+<th>Object</th>
+<th>Email</th>
+<th>Object</th>
+<th>Object</th>
+</tr>
+
+</thead>
+
+
+<tbody>
+{% dump contacts %}
+{% for contact in contacts %}
+
+<tr>
+    <td>{{ contact.subject }}</td>
+    <td>{{ contact.email }}</td>
+    <td>{{ contact.fullName }}</td>
+    <td>{{ contact.description }}</td>
+     <td><a> <button class="btn btn-primary">Modifier</button><a>
+
+     <a href="{{ absolute_url(path("app_contact_delete", {id:contact.id}))}}> <button class="btn btn-danger">Supprimer</button><a>
+     
+     </td>
+</tr>
+
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% endblock %}

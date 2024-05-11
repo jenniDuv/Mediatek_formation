@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{#{% extends "base.html.twig" %}
 
 {% block title %}
 
@@ -16,25 +16,41 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
+
+               
+
                     <li class="nav-item">
 
 
 
-                        <a class="nav-link" href="{{ path('admin.accueil') }}">Accueil</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ path('admin.formations') }}">Formations</a>
+
+                    
+                    {% endif %}
+
                     </li>
                     <li class="nav-item">
+
+
                         <a class="nav-link" href="{{ path('admin.playlists') }}">Playlists</a>
-                    </li>
+
+
+                    <li class="nav-item">
+
+
+                    <a class="nav-link" href="{{ path('admin.categories') }}">Catégorie</a>
+
+                    </li>                    
                 </ul>
             </div>
 
-             {% if app.user %}
+            {% if app.user %}
 
             <a href="{{absolute_url(path('app_logout'))}}"><button class="btn btn-danger">Se deconnecter</button></a>
 
+           {#{% else %}
+
+             <a href="{{absolute_url(path('connect_keycloak_start'))}}"><button class="btn btn-primary">Se connecter</button></a>
 
             {% endif %}
 
@@ -46,13 +62,18 @@
 
 
 
+
+
 {% block body %}{% endblock %}
 {% block footer %}
     <div class="container text-center">
         <footer>
             <hr>
             <p><small><i>
-                Consultez nos <a class="link-secondary" href="{{ path('admin.cgu') }}">Conditions Générales d'Utilisation</a>
+
+
+
+                Consultez nos <a class="link-secondary" href="{{ path('cgu') }}">Conditions Générales d'Utilisation</a>
             </i></small></p>
             
         </footer>

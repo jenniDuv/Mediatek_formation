@@ -53,6 +53,12 @@
 
                     {% endif %}
 
+                    <li class="nav-item">
+
+                     {% if app.user %}
+
+                        <a class="nav-link" href="{{ path('admin.categories') }}">Catégories</a>
+                    {% endif %}
 
                     </li>                    
                 </ul>
@@ -60,7 +66,7 @@
 
             {% if app.user %}
 
-            <a href="{{absolute_url(path('connect_keycloak_start'))}}"><button class="btn btn-danger">Se deconnecter</button></a>
+            <a href="{{absolute_url(path('app_logout'))}}"><button class="btn btn-danger">Se deconnecter</button></a>
 
             {% else %}
 

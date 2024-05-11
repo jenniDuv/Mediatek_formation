@@ -20,7 +20,7 @@
         Vous pouvez aussi retrouver les vidéos regroupées dans des playlists, dans la partie <strong>
 
         {% if app.user %}
-        <a href="{{ path('playlists') }}" class="link-info">Playlists</a>
+        <a href="{{ path('admin.playlists') }}" class="link-info">Playlists</a>
         {% else %}
         <a href="{{ path('playlists') }}" class="link-info">Playlists</a>
         {% endif %}
@@ -85,5 +85,3 @@
         </table> 
     </p>
 {% endblock %}
-
-

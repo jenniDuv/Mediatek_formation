@@ -40,6 +40,8 @@ class FormationsController extends AbstractController {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository= $categorieRepository;
     }
+
+
     
     /**
      * @Route("/formations", name="formations")
@@ -54,6 +56,8 @@ class FormationsController extends AbstractController {
 
         ]);
     }
+
+    //filtre croissant et décroissant
 
     /**
      * @Route("/formations/tri/{champ}/{ordre}/{table}", name="formations.sort")
@@ -70,6 +74,8 @@ class FormationsController extends AbstractController {
             'categories' => $categories
         ]);
     }
+
+    //permet de faire une recheche dans la page de formation
     
     /**
      * @Route("/formations/recherche/{champ}/{table}", name="formations.findallcontain")

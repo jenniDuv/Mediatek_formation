@@ -36,7 +36,7 @@ class AccueilController extends AbstractController
 
 
 
-
+    //Page d'accueil
     /**
      * @Route("/", name="accueil")
      * @return Response

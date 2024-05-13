@@ -70,8 +70,14 @@
 
             {% else %}
 
-             <a href="{{absolute_url(path('login'))}}"><button class="btn btn-primary">Se connecter</button></a>
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
 
+            <a href="{{absolute_url(path('app_register'))}}"><button class="btn btn-primary">Inscription</button></a>
+
+             <a href="{{absolute_url(path('app_login'))}}"><button class="btn btn-primary">Se connecter</button></a>
+            </li>
+            </ul>
             {% endif %}
 
         </nav>        
